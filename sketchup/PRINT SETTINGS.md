@@ -6,6 +6,14 @@ These settings relate to horizontal expansion tuning in UltiMaker Cura.
 
 ## PLA
 
-- horizontal expansion -0.07mm
+Everything Else:
+
+- horizontal expansion -0.08mm
 - initial layer expansion -0.1mm
+- hole expansion 0mm
+
+Main Tray:
+
+- horizontal expansion -0.05mm
+- initial layer expansion -0.8mm
 - hole expansion 0mm
