@@ -1,4 +1,26 @@
-// #include <InputDebounce.h>
+/**
+ * @file arduino.ino
+ * @author cole fuerth
+ * @brief debounced input pullups for inputs, and toggleable outputs
+ * @version 0.1
+ * @date 2022-04-14
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
+#define BRIGHTS_IN 12
+#define BRIGHTS_OUT 5
+#define LT_IN 10
+#define LT_OUT 11
+#define RT_IN 8
+#define RT_OUT 9
+#define UNDERGLOW_OUT 3
+
+#define SPARE1_IN 6
+#define SPARE2_IN 4
+#define SPARE3_IN 2
+#define SPARE1_OUT 7
 
 /**
  * @brief debounced INPUT_PULLUP on a pin; produces a state for outputs to use
@@ -13,10 +35,10 @@ public:
 
     TOGGLE_BUTTON(uint8_t pin, uint16_t debounce_delay = 20)
     {
-        pin = pin;
-        debounce = debounce_delay;
-        state = 0;
-        input = 0;
+        this->pin = pin;
+        this->debounce = debounce_delay;
+        this->state = 0;
+        this->input = 0;
     }
 
     boolean update_state()
@@ -37,6 +59,7 @@ private:
         if (TON(in != input, debounce))
         {
             input = in;
+            Serial.println("pin " + String(pin) + " input " + String(input ? "HIGH" : "LOW"));
         }
         return input;
     }
@@ -82,8 +105,8 @@ class IO
 public:
     TOGGLE_BUTTON *control;
     uint8_t pin;
-    virtual IO() {}
-    virtual ~IO() {}
+    IO() {}
+    ~IO() { delete control; }
     virtual boolean update_state();
 };
 
@@ -100,11 +123,6 @@ public:
     {
         this->pin = pin;
         this->control = input;
-    }
-
-    ~BRIGHTS()
-    {
-        delete control;
     }
 
     boolean update_state()
@@ -141,23 +159,30 @@ private:
     }
 };
 
-BRIGHTS brights(9, new TOGGLE_BUTTON(6));
-TURNSIGNAL lt(8, new TOGGLE_BUTTON(4));
-TURNSIGNAL rt(7, new TOGGLE_BUTTON(2));
+BRIGHTS brights(BRIGHTS_OUT, new TOGGLE_BUTTON(BRIGHTS_IN));
+TURNSIGNAL lt(LT_OUT, new TOGGLE_BUTTON(LT_IN));
+TURNSIGNAL rt(RT_OUT, new TOGGLE_BUTTON(RT_IN));
 
 IO *io_list[] = {&brights, &lt, &rt};
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
     while (!Serial)
         delay(1);
     // initialize pinModes (not set when constructing above objects)
     for (auto i : io_list)
     {
         pinMode(i->pin, OUTPUT);
+        Serial.println("pin " + String(i->pin) + " output");
         pinMode(i->control->pin, INPUT_PULLUP);
+        Serial.println("pin " + String(i->control->pin) + " input");
     }
+
+    // underglow control pin is on all the time for now
+    pinMode(UNDERGLOW_OUT, OUTPUT);
+    digitalWrite(UNDERGLOW_OUT, HIGH);
+
     Serial.println("setup complete");
 }
 
