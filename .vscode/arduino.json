@@ -2,6 +2,6 @@
     "board": "arduino:avr:nano",
     "programmer": "arduino:avrispmkii",
     "sketch": "arduino\\arduino.ino",
-    "port": "COM5",
+    "port": "COM3",
     "configuration": "cpu=atmega328old"
 }

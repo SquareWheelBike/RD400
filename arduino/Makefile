@@ -19,6 +19,8 @@ PROGRAMMER = avrispmkii
 libraries:
 # 	install the avr binaries for micro/nano
 	$(AC) core install arduino:avr
+#   Install the NFC library
+	$(AC) lib install "MFRC522"
 
 # attach:
 # 	$(AC) board attach -b $(BOARD) -p $(USB) $(MAIN)
