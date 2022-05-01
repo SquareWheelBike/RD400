@@ -15,5 +15,11 @@ Inserts:
 Everything Else:
 
 - horizontal expansion -0.05mm
-- initial layer expansion -0.8mm
+- initial layer expansion -0.08mm
 - hole expansion 0mm
+
+
+Lid (ABS):
+
+- horizontal expansion -0.25mm
+- initial layer expansion -0.25mm
