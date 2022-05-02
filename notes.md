@@ -17,4 +17,14 @@
 - the lights and ignition should be fused separately, after the main fuse
 - the motogadget M unit is probably the way to stay, NFC will be stinky difficult, unless I wanna put time and ESP resources into it
 
+## May 2, 2022
+
+### What actually failed
+
+- As it turns out, logic-level MOSFETs do not have a very high V<sub>GS</sub>. As a reesult, I burned out the FET gate after extended exposure to 12V. Although V<sub>DS</sub> is 60V, we need to maintain a low V<sub>GS</sub>.
+- Somehow, an 18awg wire burned, drawing 2.5 amps.
+- The 18awg has been replaced by 12awg for the main battery wire
+- The motogadget will not stay on, even with no load on the system. It MAY need a backing capacitor
+
+
 keith z
