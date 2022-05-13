@@ -183,11 +183,9 @@ IO *io_list[] = {&brights, &lt, &rt};
 
 void setup()
 {
-    Serial.begin(115200);
-    while (!Serial)
-        delay(1);
-    delay(10);
-    Serial.println("hello there");
+    // Serial.begin(115200);
+    // while (!Serial)
+    //     delay(1);
     // initialize pinModes (not set when constructing above objects)
     for (auto i : io_list)
     {
@@ -210,27 +208,7 @@ void setup()
     pinMode(SPARE3_IN, INPUT_PULLUP);
 #endif
 
-    Serial.println("setup complete");
-
-    // START OF STARTUP SEQUENCE
-
-    // // high = on
-    // for (int i = 0; i < 2; i++)
-    // {
-    //     // write all lights on
-    //     for (auto io : io_list)
-    //     {
-    //         digitalWrite(io->pin, HIGH);
-    //     }
-    //     delay(250);
-    //     // write all lights off
-    //     for (auto io : io_list)
-    //     {
-    //         digitalWrite(io->pin, LOW);
-    //     }
-    //     delay(250);
-    // }
-    
+    // Serial.println("setup complete");
 }
 
 void loop()
