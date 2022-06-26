@@ -2,41 +2,24 @@
  * @file arduino.ino
  * @author cole fuerth
  * @brief debounced input pullups for inputs, and toggleable outputs
- * @version 0.1
+ * @version 0.2
  * @date 2022-04-14
  *
  * @copyright Copyright (c) 2022
  *
  */
 
-#define __NANO
-
-#ifdef __NANO
-
-#define BRIGHTS_IN 12
-#define BRIGHTS_OUT 5
-#define LT_IN 10
-#define LT_OUT 11
-#define RT_IN 8
-#define RT_OUT 9
-#define UNDERGLOW_OUT 3
-
-#define SPARE1_IN 6
-#define SPARE2_IN 4
-#define SPARE3_IN 2
-#define SPARE1_OUT 7
-
-#else
-
-#define BRIGHTS_IN 9
-#define BRIGHTS_OUT 8
-#define LT_IN 7
-#define LT_OUT 6
-#define RT_IN 5
+#define BRIGHTS_IN A1
+#define BRIGHTS_OUT 6
+#define LT_IN A2
+#define LT_OUT 5
+#define RT_IN A3
 #define RT_OUT 4
-#define UNDERGLOW_OUT 3
+#define UNDERGLOW_OUT 8
 
-#endif
+#define SDA 2
+#define SCL 3
+#define SPARE1_OUT 7 // main power
 
 /**
  * @brief debounced INPUT_PULLUP on a pin; produces a state for outputs to use
