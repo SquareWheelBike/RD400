@@ -9,6 +9,17 @@
  *
  */
 
+// toggle debug mode
+#define __DEBUG
+
+#ifdef __DEBUG
+#define DEBUG(x) Serial.print(x)
+#define DEBUGLN(x) Serial.println(x)
+#else
+#define DEBUG(x)
+#define DEBUGLN(x)
+#endif
+
 #define BRIGHTS_IN A1
 #define BRIGHTS_OUT 6
 #define LT_IN A2
@@ -19,7 +30,7 @@
 
 #define SDA 2
 #define SCL 3
-#define SPARE1_OUT 7 // main power
+#define POWER_OUT 7 // main power
 
 /**
  * @brief debounced INPUT_PULLUP on a pin; produces a state for outputs to use
@@ -58,7 +69,7 @@ private:
         if (TON(in != input, debounce))
         {
             input = in;
-            // Serial.println("pin " + String(pin) + " input " + String(input ? "HIGH" : "LOW"));
+            DEBUGLN("pin " + String(pin) + " input " + String(input ? "HIGH" : "LOW"));
         }
         return input;
     }
@@ -99,6 +110,10 @@ private:
     }
 };
 
+/**
+ * @brief IO is a general class for an input/output pair
+ *
+ */
 class IO
 {
 public:
@@ -166,32 +181,29 @@ IO *io_list[] = {&brights, &lt, &rt};
 
 void setup()
 {
-    // Serial.begin(115200);
-    // while (!Serial)
-    //     delay(1);
+#ifdef __DEBUG
+    Serial.begin(115200);
+    while (!Serial)
+        delay(1);
+#endif
     // initialize pinModes (not set when constructing above objects)
     for (auto i : io_list)
     {
         pinMode(i->pin, OUTPUT);
-        // Serial.println("pin " + String(i->pin) + " output");
+        DEBUGLN("pin " + String(i->pin) + " output");
         pinMode(i->control->pin, INPUT_PULLUP);
-        // Serial.println("pin " + String(i->control->pin) + " input");
+        DEBUGLN("pin " + String(i->control->pin) + " input");
     }
 
     // underglow control pin is on all the time for now
     pinMode(UNDERGLOW_OUT, OUTPUT);
     digitalWrite(UNDERGLOW_OUT, HIGH);
 
-// initialize spares
-#ifdef __NANO
-    pinMode(SPARE1_OUT, OUTPUT);
-    digitalWrite(SPARE1_OUT, LOW);
-    pinMode(SPARE1_IN, INPUT_PULLUP);
-    pinMode(SPARE2_IN, INPUT_PULLUP);
-    pinMode(SPARE3_IN, INPUT_PULLUP);
-#endif
+    // initialize spares
+    pinMode(POWER_OUT, OUTPUT);
+    digitalWrite(POWER_OUT, LOW);
 
-    // Serial.println("setup complete");
+    DEBUGLN("setup complete");
 }
 
 void loop()
