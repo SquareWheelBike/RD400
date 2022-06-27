@@ -51,7 +51,7 @@ void setup()
     pinMode(UNDERGLOW_OUT, OUTPUT);
     digitalWrite(UNDERGLOW_OUT, HIGH);
 
-    // initialize spares
+    // initialize power output to be always HIGH
     pinMode(POWER_OUT, OUTPUT);
     digitalWrite(POWER_OUT, LOW);
 
