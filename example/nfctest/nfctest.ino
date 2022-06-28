@@ -2,12 +2,20 @@
 #include <MFRC522.h>
 
 // whenever a card with a known UID is detected, toggle the LED
+
+#define LED_PIN 13
+#define RST_PIN 9
+#define SS_PIN 10
+
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 void setup()
 {
     // initialize the MFRC522
     mfrc522.PCD_Init();
+
+    // set the pinmode of the LED pin to output
+    pinMode(LED_PIN, OUTPUT);
     Serial.println("setup complete");
 }
 
