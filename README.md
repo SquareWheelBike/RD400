@@ -6,6 +6,8 @@ In the [sketchup](sketchup/) folder, you can find the .stl files for 3d printing
 
 The tray has a top-mounted window, on the lid, so the electronics can be seen inside.
 
+The design for the PCB was crated in EasyEDA.
+
 ## The Arduino
 
 The arduino is necessary, since the pushbuttons on the handlebar are momentary push buttons, rather than latching push buttons. Making a latching circuit may have been a trivial affair, but we wanted the ability to expand features in the future. An arduino allows for this kind of modularity.
