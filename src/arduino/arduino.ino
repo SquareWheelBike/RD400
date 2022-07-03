@@ -10,7 +10,7 @@
  */
 
 // toggle debug mode (define before including rd400.h)
-// #define __DEBUG
+#define __DEBUG
 #include "rd400.h"
 #include <SPI.h>
 #include <MFRC522.h>
