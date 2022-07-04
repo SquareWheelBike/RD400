@@ -1,41 +1,10 @@
-/**
- * @file arduino.ino
- * @author cole fuerth
- * @brief debounced input pullups for inputs, and toggleable outputs
- * @version 0.1
- * @date 2022-04-14
- *
- * @copyright Copyright (c) 2022
- *
- */
 
-#define __NANO
-
-#ifdef __NANO
-
-#define BRIGHTS_IN 12
-#define BRIGHTS_OUT 5
-#define LT_IN 10
-#define LT_OUT 11
-#define RT_IN 8
-#define RT_OUT 9
-#define UNDERGLOW_OUT 3
-
-#define SPARE1_IN 6
-#define SPARE2_IN 4
-#define SPARE3_IN 2
-#define SPARE1_OUT 7
-
+#ifdef __DEBUG
+#define DEBUG(x) Serial.print(x)
+#define DEBUGLN(x) Serial.println(x)
 #else
-
-#define BRIGHTS_IN 9
-#define BRIGHTS_OUT 8
-#define LT_IN 7
-#define LT_OUT 6
-#define RT_IN 5
-#define RT_OUT 4
-#define UNDERGLOW_OUT 3
-
+#define DEBUG(x)
+#define DEBUGLN(x)
 #endif
 
 /**
@@ -75,7 +44,7 @@ private:
         if (TON(in != input, debounce))
         {
             input = in;
-            // Serial.println("pin " + String(pin) + " input " + String(input ? "HIGH" : "LOW"));
+            DEBUGLN("pin " + String(pin) + " input " + String(input ? "HIGH" : "LOW"));
         }
         return input;
     }
@@ -116,6 +85,10 @@ private:
     }
 };
 
+/**
+ * @brief IO is a general class for an input/output pair
+ *
+ */
 class IO
 {
 public:
@@ -174,48 +147,3 @@ private:
             return 0;
     }
 };
-
-BRIGHTS brights(BRIGHTS_OUT, new TOGGLE_BUTTON(BRIGHTS_IN));
-TURNSIGNAL lt(LT_OUT, new TOGGLE_BUTTON(LT_IN));
-TURNSIGNAL rt(RT_OUT, new TOGGLE_BUTTON(RT_IN));
-
-IO *io_list[] = {&brights, &lt, &rt};
-
-void setup()
-{
-    // Serial.begin(115200);
-    // while (!Serial)
-    //     delay(1);
-    // initialize pinModes (not set when constructing above objects)
-    for (auto i : io_list)
-    {
-        pinMode(i->pin, OUTPUT);
-        // Serial.println("pin " + String(i->pin) + " output");
-        pinMode(i->control->pin, INPUT_PULLUP);
-        // Serial.println("pin " + String(i->control->pin) + " input");
-    }
-
-    // underglow control pin is on all the time for now
-    pinMode(UNDERGLOW_OUT, OUTPUT);
-    digitalWrite(UNDERGLOW_OUT, HIGH);
-
-// initialize spares
-#ifdef __NANO
-    pinMode(SPARE1_OUT, OUTPUT);
-    digitalWrite(SPARE1_OUT, LOW);
-    pinMode(SPARE1_IN, INPUT_PULLUP);
-    pinMode(SPARE2_IN, INPUT_PULLUP);
-    pinMode(SPARE3_IN, INPUT_PULLUP);
-#endif
-
-    // Serial.println("setup complete");
-}
-
-void loop()
-{
-    for (auto i : io_list)
-    {
-        i->update_state();
-    }
-    delay(1);
-}
