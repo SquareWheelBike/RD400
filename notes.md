@@ -28,3 +28,23 @@
 
 
 keith z
+
+## July 7, 2022
+
+Final assembly day for Freedom Machine
+
+### PCB notes
+
+Suggestions for the next iteration of the PCB
+
+- The buck converter +- leads are backwards
+- The RT and LT inputs are touching for some reason, I think one of the traces is too close to a larger solder pad and they're bridging
+- The RJ45 needs to have an actual port on the board, that works with SPI.
+- An arduino micro might draw too much power with the NFC on it; next revision needs to see an ESP of some kind with a sleep function, and a hardware interrupt on the NFC reader, so a low power mode is available
+- the FETs should have pulldown resistors on the gates; when the controller is uninitalized or missing the gate leaks
+- use automotive fuses next time, and make sure the footprint actually matches the part being used
+- Optocouplers are a must for inputs
+- reverse polarity protection
+- a secondary 3.3V rail for NFC
+
+As a side, the NFC could mount to where the old regulator rectifier would have mounted
