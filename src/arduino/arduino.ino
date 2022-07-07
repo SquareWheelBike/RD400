@@ -151,7 +151,8 @@ void loop()
     }
 
 #ifdef __RFID
-    if (RFID_enable == 0x00)
+static OneShotFlasher flash(5);
+    if (RFID_enable == 0x00 && flash.state())
     {
         switch (checkNFC())
         {
@@ -173,7 +174,7 @@ void loop()
         }
     }
 #endif
-    delay(1);
+    delay(20);
 }
 
 // ----------------- NFC FUNCTIONS -----------------

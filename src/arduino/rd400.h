@@ -147,3 +147,26 @@ private:
             return 0;
     }
 };
+
+class OneShotFlasher
+{
+public:
+    OneShotFlasher(float hz)
+    {
+        this->hz = hz;
+    }
+    boolean state()
+    {
+        if (millis() - lastTime >= round(1000.0 / hz) || millis() < lastTime)
+        {
+            lastTime = millis();
+            return true;
+        }
+        else
+            return false;
+    }
+
+private:
+    float hz;
+    unsigned long lastTime = 0;
+};
