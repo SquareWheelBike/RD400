@@ -116,7 +116,10 @@ public:
 
     boolean update_state()
     {
-        digitalWrite(pin, control->update_state());
+        bool state = control->update_state();
+        digitalWrite(pin, state);
+        // DEBUGLN("BRIGHTS " + String(pin) + " " + String(state ? "HIGH" : "LOW"));
+        return state;
     }
 };
 
@@ -134,7 +137,10 @@ public:
 
     boolean update_state()
     {
-        digitalWrite(pin, control->update_state() && FlasherBit(hz));
+        bool state = control->update_state();
+        digitalWrite(pin, state && FlasherBit(hz));
+        // DEBUGLN("TURNSIGNAL " + String(pin) + " " + String(state ? "HIGH" : "LOW"));
+        return state;
     }
 
 private:
